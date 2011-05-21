@@ -1,0 +1,14 @@
+# Application dependencies
+
+require:
+    - play
+    - clevercloud -> fmkcms 0.9
+
+
+repositories:
+  
+  - localModules:
+        type:       local
+        artifact: "/opt/playmods/[artifact]"
+        contains:
+            - clevercloud -> fmkcms 0.9
