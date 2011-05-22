@@ -18,6 +18,8 @@ import org.bson.types.ObjectId;
 public class Product extends Translatable<Product, ProductRef> implements Searchable {
     
     public String name;
+    public Integer price;
+    public String currency;
     
 
     public String getPrintTitle() {

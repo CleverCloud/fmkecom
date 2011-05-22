@@ -1,0 +1,64 @@
+#{extends 'main.html' /}
+
+#{set title:'New Product' /}
+
+
+#{if otherPage}
+#{if action.equals("translate")}
+<p>You are currently translating ${otherPage.urlId} from ${otherPage.language}.</p>
+#{/if}
+#{elseif action.equals("edit")}
+<p>You are currently editing ${otherPage.urlId}.</p>
+#{/elseif}
+#{/if}
+
+#{form @ProductController.doNewProduct() , id:'creationForm', enctype:'multipart/form-data' }
+
+#{field 'product.name'}
+<p>
+   <label>&{'product.name'} </label>
+   %{
+   if (field.flash == null && otherPage != null)
+   field.flash = otherPage?.title;
+   }%
+   <input type="text" id="${field.id}" name="${field.name}" value="${field.flash}" class="${field.errorClass}" />
+   <span class="error">${field.error}</span>
+</p>
+#{/}
+
+
+#{field 'page.language'}
+<p>
+   <label>Language: </label>
+   #{if action.equals("edit")}
+   <input type="hidden" id="${field.id}" name="${field.name}" value="${otherPage?.language}" class="${field.errorClass}" />
+   ${otherPage?.language}
+   #{/if}
+   #{else}
+   #{selectLang field:field /}
+   #{/else}
+   <span class="error">${field.error}</span>
+</p>
+#{/}
+
+
+#{field 'page.published'}
+#{if otherUrlId.equals(play.Play.configuration.getProperty("fmkcms.index", "index"))}
+<input type="hidden" id="${field.id}" name="${field.name}" value="on" class="${field.errorClass}" />
+#{/if}
+#{else}
+<p>
+   <label>Published: </label>
+   %{
+   if(action.equals("edit"))
+   field.flash = otherPage.published;
+   }%
+   <input id="${field.id}" name="${field.name}" class="${field.errorClass}" type="checkbox" #{if field.flash} checked #{/if} />
+          <span class="error">${field.error}</span>
+</p>
+#{/else}
+#{/}
+
+<input type="submit" value="ok" />
+
+#{/form}

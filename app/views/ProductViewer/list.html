@@ -1,0 +1,24 @@
+#{extends 'main.html' /}
+#{set title:'list product' /}
+
+
+
+
+<table class="listofproducts">
+   #{list items:products, as:'p'}
+   <tr>
+      <td>----------</td>
+   </tr>
+   #{list items:p.getAvailableLocalesAndTranslatables(), as:'ppp'}
+   <tr>
+      #{set pp:ppp.getValue()/}
+      <td>${pp.language}</td>
+      <td>${pp.name}</td>
+    </tr>
+   #{/list}
+
+   #{/list}
+</table>
+<div id="newproduct"><a href="@{ProductController.newProduct()}">&{'newproduct'}</a></div>
+
+ 
