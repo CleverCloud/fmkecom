@@ -1,7 +1,7 @@
 #{extends 'ProductController/layout.html' /}
 #{set title:messages.get('product.lookat', productRef.product_reference) /}
 
-
+<div>&{'productRef.product_reference'} ${productRef.product_reference}</div>
 #{list items:productRef.getAvailableLocalesMap().entrySet(), as:'ppp'}
 <div>    
     #{set pp:ppp.getValue()/}

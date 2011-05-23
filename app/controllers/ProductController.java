@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Locale;
 import models.fmkecom.Product;
 import models.fmkecom.ProductRef;
+import play.data.validation.Validation;
 import play.mvc.Controller;
 
 /**
@@ -25,45 +26,71 @@ public class ProductController extends Controller {
 
       render(productRef);
    }
-   
-   
+
    public static void doEditProduct(String id) {
       Product product = Product.getManager().getByMongodId(id);
+      product.name = params.get("product.name");
+      validation.valid(product);
+      if (Validation.hasErrors()) {
+         params.flash();
+         validation.keep();
+         editProduct(id);
+      } else {
+         product.save();
+         lookAt(product.reference.id.toStringMongod());
+      }
 
-      
    }
 
    public static void editProduct(String id) {
       Product product = Product.getManager().getByMongodId(id);
+
 
       render(product);
    }
 
    public static void doTranslate(String id) {
       ProductRef productRef = ProductRef.getManager().getRefByMongodId(id);
-      Product p = new Product();
-      p.name = params.get("product.name");
-      p.reference = productRef;
-      p.language = params.get("product.language", Locale.class);
-      p.save();
-      lookAt(productRef.id.toStringMongod());
+      Product product = new Product();
+      product.name = params.get("product.name");
+      product.reference = productRef;
+      product.language = params.get("product.language", Locale.class);
+      validation.valid(product);
+      if (Validation.hasErrors()) {
+         params.flash();
+         validation.keep();
+         translate(id);
+      } else {
+         product.save();
+         lookAt(productRef.id.toStringMongod());
+      }
    }
 
    public static void doNewProduct() {
-      ProductRef pr = new ProductRef();
-      Product p = new Product();
-      p.name = params.get("product.name");
-      p.reference = pr;
-      p.language = params.get("product.language", Locale.class);
-      pr.save();
-      p.save();
-      ProductController.list();
+      ProductRef productRef = new ProductRef();
+      Product product = new Product();
+      productRef.product_reference = params.get("productRef.product_reference");
+      product.name = params.get("product.name");
+      product.reference = productRef;
+      product.language = params.get("product.language", Locale.class);
+      validation.valid(product);
+      validation.valid(productRef);
+      if (Validation.hasErrors()) {
+         params.flash();
+         validation.keep();
+         newProduct();
+      } else {
+
+         productRef.save();
+         product.save();
+         ProductController.list(0);
+      }
    }
 
-   public static void list() {
-      List<ProductRef> products = ProductRef.getDs().find(ProductRef.class).asList();
-      
-      render(products);
+   public static void list(Integer pageNumber) {
+      List<ProductRef> products = ProductRef.getManager().getRefPage(pageNumber, 20);
+
+      render(products, pageNumber);
    }
 
    public static void lookAt(String id) {

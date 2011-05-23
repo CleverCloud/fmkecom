@@ -5,7 +5,7 @@
 
 #{form @ProductController.doTranslate(productRef.id.toStringMongod()) , id:'creationForm', enctype:'multipart/form-data' }
 
-#{textInput 'product.name' /}
+#{include 'productController/formProduct.html'/}
 
 #{field 'product.language'}
 <p>

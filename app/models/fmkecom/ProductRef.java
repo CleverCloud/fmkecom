@@ -9,6 +9,8 @@ import java.util.Map;
 import java.util.Set;
 import models.fmkcms.I18nShortValue;
 import models.i18n.*;
+import net.sf.oval.constraint.NotEmpty;
+import net.sf.oval.constraint.NotNull;
 import org.bson.types.ObjectId;
 
 /**
@@ -18,14 +20,12 @@ import org.bson.types.ObjectId;
 @Entity
 public class ProductRef extends TranslatableRef<Product, ProductRef> {
 
-    public String product_reference;
-    public Set<ProductCarac> carac;
+   @NotNull
+   @NotEmpty
+   public String product_reference;
+   public Set<ProductCarac> carac;
 
-    public static ProductRef getByMongod(String key) {
-        return getDs().find(ProductRef.class, "id", new ObjectId(key)).get();
-    }
-    
-     public static TranslatableManager<Product, ProductRef> getManager() {
+   public static TranslatableManager<Product, ProductRef> getManager() {
       return new TranslatableManager<Product, ProductRef>(Product.class, ProductRef.class);
    }
 }
