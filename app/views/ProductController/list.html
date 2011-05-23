@@ -1,0 +1,30 @@
+#{extends 'ProductController/layout.html' /}
+#{set title:'list product' /}
+
+
+
+
+<table class="listofproducts">
+   #{list items:products, as:'p'}
+   
+   <tr>
+      <td>
+  #{a @ProductController.lookAt(p.id.toStringMongod())}${p.id.toStringMongod()}#{/a}
+   </td>
+   </tr>
+   #{list items:p.getAvailableLocalesMap().entrySet(), as:'ppp'}
+   <tr>
+      #{set pp:ppp.getValue()/}
+      <td>${ppp.getKey()}</td>
+      <td>${pp.name}</td>
+    </tr>
+   #{/list}
+<tr>
+      <td>----------</td>
+   </tr>
+   
+   #{/list}
+</table>
+
+
+ 

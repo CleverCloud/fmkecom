@@ -13,8 +13,6 @@ import play.mvc.Controller;
  * @author waxzce
  */
 public class ProductViewer extends Controller {
-    public static void list(){
-        List<ProductRef> products = ProductRef.getDs().find(ProductRef.class).asList();
-        render(products);
-    }
+
+    
 }

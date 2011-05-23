@@ -1,0 +1,11 @@
+#{extends 'ProductController/layout.html' /}
+
+#{list items:productRef.getAvailableLocalesMap().entrySet(), as:'ppp'}
+<div>    
+    #{set pp:ppp.getValue()/}
+    <div>${ppp.getKey()}</div>
+    <div>${pp.name}</div>
+</div>
+#{/list}
+
+#{a @ProductController.translate(productRef.id.toStringMongod())}&{'translate'}#{/a}
