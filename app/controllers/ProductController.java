@@ -16,48 +16,59 @@ import play.mvc.Controller;
  */
 public class ProductController extends Controller {
 
-    public static void newProduct() {
-        render();
-    }
+   public static void newProduct() {
+      render();
+   }
 
-    public static void translate(String id) {
-        ProductRef productRef = ProductRef.getByMongod(id);
+   public static void translate(String id) {
+      ProductRef productRef = ProductRef.getManager().getRefByMongodId(id);
 
-        render(productRef);
-    }
+      render(productRef);
+   }
+   
+   
+   public static void doEditProduct(String id) {
+      Product product = Product.getManager().getByMongodId(id);
 
-    public static void doTranslate(String id) {
-        ProductRef productRef = ProductRef.getByMongod(id);
-        Product p = new Product();
-        p.name = params.get("product.name");
-        p.reference = productRef;
-        p.language = params.get("product.language", Locale.class);
-        p.save();
-        lookAt(productRef.id.toStringMongod());
-    }
+      
+   }
 
-    public static void doNewProduct() {
-        ProductRef pr = new ProductRef();
-        Product p = new Product();
-        p.name = params.get("product.name");
-        p.reference = pr;
-        p.language = params.get("product.language", Locale.class);
-        pr.save();
-        p.save();
-        ProductController.list();
-    }
+   public static void editProduct(String id) {
+      Product product = Product.getManager().getByMongodId(id);
 
-    public static void list() {
-        List<ProductRef> products = ProductRef.getDs().find(ProductRef.class).asList();
-        for (ProductRef productRef : products) {
-            System.out.println(productRef.getAvailableLocales());
-        }
-        render(products);
-    }
+      render(product);
+   }
 
-    public static void lookAt(String id) {
-        ProductRef productRef = ProductRef.getByMongod(id);
+   public static void doTranslate(String id) {
+      ProductRef productRef = ProductRef.getManager().getRefByMongodId(id);
+      Product p = new Product();
+      p.name = params.get("product.name");
+      p.reference = productRef;
+      p.language = params.get("product.language", Locale.class);
+      p.save();
+      lookAt(productRef.id.toStringMongod());
+   }
 
-        render(productRef);
-    }
+   public static void doNewProduct() {
+      ProductRef pr = new ProductRef();
+      Product p = new Product();
+      p.name = params.get("product.name");
+      p.reference = pr;
+      p.language = params.get("product.language", Locale.class);
+      pr.save();
+      p.save();
+      ProductController.list();
+   }
+
+   public static void list() {
+      List<ProductRef> products = ProductRef.getDs().find(ProductRef.class).asList();
+      
+      render(products);
+   }
+
+   public static void lookAt(String id) {
+      ProductRef productRef = ProductRef.getManager().getRefByMongodId(id);
+
+      render(productRef);
+   }
 }

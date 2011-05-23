@@ -1,31 +1,11 @@
 #{extends 'ProductController/layout.html' /}
 
-#{set title:'New Product' /}
+#{set title:messages.get('translate.product') /}
 
-
-#{if otherPage}
-#{if action.equals("translate")}
-<p>You are currently translating ${otherPage.urlId} from ${otherPage.language}.</p>
-#{/if}
-#{elseif action.equals("edit")}
-<p>You are currently editing ${otherPage.urlId}.</p>
-#{/elseif}
-#{/if}
 
 #{form @ProductController.doTranslate(productRef.id.toStringMongod()) , id:'creationForm', enctype:'multipart/form-data' }
 
-#{field 'product.name'}
-<p>
-    <label>&{'product.name'} </label>
-    %{
-    if (field.flash == null && otherPage != null)
-    field.flash = otherPage?.title;
-    }%
-    <input type="text" id="${field.id}" name="${field.name}" value="${field.flash}" class="${field.errorClass}" />
-    <span class="error">${field.error}</span>
-</p>
-#{/}
-
+#{textInput 'product.name' /}
 
 #{field 'product.language'}
 <p>
@@ -34,7 +14,6 @@
     <span class="error">${field.error}</span>
 </p>
 #{/}
-
 
 <input type="submit" value="ok" />
 

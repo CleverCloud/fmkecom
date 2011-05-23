@@ -1,19 +1,18 @@
 #{extends 'ProductController/layout.html' /}
 
-#{set title:messages.get('product.new') /}
+#{set title:messages.get('product.edit') /}
 
 
-#{form @ProductController.doNewProduct() , id:'creationForm', enctype:'multipart/form-data' }
+#{form @ProductController.doEditProduct() , id:'creationForm', enctype:'multipart/form-data' }
 
-
-
-#{textInput 'productRef.product_reference' /}
+${product.language}
 
 #{textInput 'product.name' /}
 
 
 #{field 'product.language'}
 <p>
+   ${field.value}
     <label>${'product.language'}</label>
     #{selectLang field:field /}
     <span class="error">${field.error}</span>

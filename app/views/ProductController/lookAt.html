@@ -1,10 +1,13 @@
 #{extends 'ProductController/layout.html' /}
+#{set title:messages.get('product.lookat', productRef.product_reference) /}
+
 
 #{list items:productRef.getAvailableLocalesMap().entrySet(), as:'ppp'}
 <div>    
     #{set pp:ppp.getValue()/}
     <div>${ppp.getKey()}</div>
     <div>${pp.name}</div>
+    #{a @ProductController.editProduct(pp.id.toStringMongod())}&{'edit'}#{/a}
 </div>
 #{/list}
 

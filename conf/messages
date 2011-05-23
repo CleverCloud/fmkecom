@@ -3,3 +3,4 @@
 # For exemple, for french create a messages.fr file
 
 #fmkecom.name=fmkecom
+product.lookat=Admin %s

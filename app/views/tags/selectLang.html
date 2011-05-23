@@ -1,7 +1,7 @@
 <select id="${_field.id}" name="${_field.name}" class="${_field.errorClass}">
     #{list items:controllers.I18nController.getAllLocalesInMap(_excludelocales).entrySet(), as:'ll'}
     #{set l:ll.getValue() /}
-    <option value="${l}" ${_field.flash?.toString().equals(l) || (_field.flash == null && request.acceptLanguage().get(0)?.substring(0, 2).equals(l.toString()))? 'selected="selected"'.raw() : ''}>${ll.getKey()}</option>
+    <option value="${l}" ${_field?.value.equals(l) || _field.flash?.toString().equals(l) || (_field.flash == null && request.acceptLanguage().get(0)?.substring(0, 2).equals(l.toString()))? 'selected="selected"'.raw() : ''}>${ll.getKey()}</option>
     #{/list}
 </select>
  
