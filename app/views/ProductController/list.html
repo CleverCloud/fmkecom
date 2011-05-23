@@ -15,7 +15,14 @@
    #{list items:p.getAvailableLocalesMap().entrySet(), as:'ppp'}
    <tr>
       #{set pp:ppp.getValue()/}
-      <td>${ppp.getKey()}</td>
+      %{
+      Locale locale = ppp.getKey();
+      StringBuilder sb = new StringBuilder(locale.getDisplayLanguage().substring(0, 1).toUpperCase()).append(locale.getDisplayLanguage().substring(1));
+            if (!locale.getCountry().equals("")) {
+                sb.append(" : ").append(locale.getDisplayCountry());
+            }
+      }%
+      <td>${sb.toString()}</td>
       <td>${pp.name}</td>
     </tr>
    #{/list}

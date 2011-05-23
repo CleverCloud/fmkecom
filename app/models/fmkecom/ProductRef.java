@@ -5,13 +5,9 @@
 package models.fmkecom;
 
 import com.google.code.morphia.annotations.Entity;
-import java.util.Map;
 import java.util.Set;
-import models.fmkcms.I18nShortValue;
 import models.i18n.*;
-import net.sf.oval.constraint.NotEmpty;
-import net.sf.oval.constraint.NotNull;
-import org.bson.types.ObjectId;
+import play.data.validation.Required;
 
 /**
  *
@@ -20,8 +16,7 @@ import org.bson.types.ObjectId;
 @Entity
 public class ProductRef extends TranslatableRef<Product, ProductRef> {
 
-   @NotNull
-   @NotEmpty
+   @Required
    public String product_reference;
    public Set<ProductCarac> carac;
 

@@ -6,11 +6,9 @@ package models.fmkecom;
 
 import com.google.code.morphia.annotations.Entity;
 import elasticsearch.Searchable;
-import models.i18n.TranslatableManager;
 import models.i18n.*;
-import net.sf.oval.constraint.NotEmpty;
-import net.sf.oval.constraint.NotNull;
 import org.bson.types.ObjectId;
+import play.data.validation.Required;
 
 /**
  *
@@ -19,8 +17,7 @@ import org.bson.types.ObjectId;
 @Entity
 public class Product extends Translatable<Product, ProductRef> implements Searchable {
 
-   @NotNull
-   @NotEmpty
+   @Required
    public String name;
    public Integer price;
    public String currency;
